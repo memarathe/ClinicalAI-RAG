@@ -1,0 +1,462 @@
+table_name,column_name,column_type,description,text_for_embedding,relationship
+cost,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: cost
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+cost,subject_id,INTEGER,Unique identifier for each patient,"Table: cost
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+cost,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: cost
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+cost,event_type,TEXT,Type of event,"Table: cost
+            Column: event_type
+            Type: TEXT
+            Description: Type of event",
+cost,event_id,INTEGER,Unique identifier for each event,"Table: cost
+            Column: event_id
+            Type: INTEGER
+            Description: Unique identifier for each event",
+cost,chargetime,TIME,Time of event,"Table: cost
+            Column: chargetime
+            Type: TIME
+            Description: Time of event",
+cost,cost,INTEGER,Cost of event,"Table: cost
+            Column: cost
+            Type: INTEGER
+            Description: Cost of event",
+diagnoses_icd,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: diagnoses_icd
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+diagnoses_icd,subject_id,INTEGER,Unique identifier for each patient,"Table: diagnoses_icd
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+diagnoses_icd,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: diagnoses_icd
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+diagnoses_icd,icd_code,TEXT,ICD code for diagnosis,"Table: diagnoses_icd
+            Column: icd_code
+            Type: TEXT
+            Description: ICD code for diagnosis",
+diagnoses_icd,charttime,TIME,Time of diagnosis,"Table: diagnoses_icd
+            Column: charttime
+            Type: TIME
+            Description: Time of diagnosis",
+procedures_icd,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: procedures_icd
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+procedures_icd,subject_id,INTEGER,Unique identifier for each patient,"Table: procedures_icd
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+procedures_icd,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: procedures_icd
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+procedures_icd,icd_code,TEXT,ICD code for procedure,"Table: procedures_icd
+            Column: icd_code
+            Type: TEXT
+            Description: ICD code for procedure",
+procedures_icd,charttime,TIME,Time of procedure,"Table: procedures_icd
+            Column: charttime
+            Type: TIME
+            Description: Time of procedure",
+labevents,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: labevents
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+labevents,subject_id,INTEGER,Unique identifier for each patient,"Table: labevents
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+labevents,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: labevents
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+labevents,itemid,INTEGER,Unique identifier for each lab test,"Table: labevents
+            Column: itemid
+            Type: INTEGER
+            Description: Unique identifier for each lab test",
+labevents,charttime,TIME,Time of lab test,"Table: labevents
+            Column: charttime
+            Type: TIME
+            Description: Time of lab test",
+labevents,valuenum,INTEGER,value of lab test,"Table: labevents
+            Column: valuenum
+            Type: INTEGER
+            Description: value of lab test",
+labevents,valueuom,TEXT,unit of measurement for lab test,"Table: labevents
+            Column: valueuom
+            Type: TEXT
+            Description: unit of measurement for lab test",
+prescriptions,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: prescriptions
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+prescriptions,subject_id,INTEGER,Unique identifier for each patient,"Table: prescriptions
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+prescriptions,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: prescriptions
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+prescriptions,starttime,TIME,Prescribed start time for drug,"Table: prescriptions
+            Column: starttime
+            Type: TIME
+            Description: Prescribed start time for drug",
+prescriptions,stoptime,TIME,Prescribed stop time for drug,"Table: prescriptions
+            Column: stoptime
+            Type: TIME
+            Description: Prescribed stop time for drug",
+prescriptions,drug,TEXT,Description of medication,"Table: prescriptions
+            Column: drug
+            Type: TEXT
+            Description: Description of medication",
+prescriptions,dose_val_rx,TEXT,Prescribed dose of drug,"Table: prescriptions
+            Column: dose_val_rx
+            Type: TEXT
+            Description: Prescribed dose of drug",
+prescriptions,dose_unit_rx,TEXT,Unit of measurement for drug dose,"Table: prescriptions
+            Column: dose_unit_rx
+            Type: TEXT
+            Description: Unit of measurement for drug dose",
+prescriptions,route,TEXT,Route of administration for drug,"Table: prescriptions
+            Column: route
+            Type: TEXT
+            Description: Route of administration for drug",
+chartevents,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: chartevents
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+chartevents,subject_id,INTEGER,Unique identifier for each patient,"Table: chartevents
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+chartevents,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: chartevents
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+chartevents,stay_id,INTEGER,Unique identifier for each care unit stay,"Table: chartevents
+            Column: stay_id
+            Type: INTEGER
+            Description: Unique identifier for each care unit stay",
+chartevents,itemid,INTEGER,Unique identifier for each measurement,"Table: chartevents
+            Column: itemid
+            Type: INTEGER
+            Description: Unique identifier for each measurement",
+chartevents,charttime,TIME,Time at which measurement was taken,"Table: chartevents
+            Column: charttime
+            Type: TIME
+            Description: Time at which measurement was taken",
+chartevents,valuenum,INTEGER,Value measured for concept identified by itemid,"Table: chartevents
+            Column: valuenum
+            Type: INTEGER
+            Description: Value measured for concept identified by itemid",
+chartevents,valueuom,TEXT,Unit of measurement for the value,"Table: chartevents
+            Column: valueuom
+            Type: TEXT
+            Description: Unit of measurement for the value",
+inputevents,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: inputevents
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+inputevents,subject_id,INTEGER,Unique identifier for each patient,"Table: inputevents
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+inputevents,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: inputevents
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+inputevents,stay_id,INTEGER,Unique identifier for each care unit stay,"Table: inputevents
+            Column: stay_id
+            Type: INTEGER
+            Description: Unique identifier for each care unit stay",
+inputevents,starttime,TIME,Start time of input event,"Table: inputevents
+            Column: starttime
+            Type: TIME
+            Description: Start time of input event",
+inputevents,itemid,INTEGER,Unique identifier for each measurement,"Table: inputevents
+            Column: itemid
+            Type: INTEGER
+            Description: Unique identifier for each measurement",
+inputevents,amount,INTEGER,Amount of drug,"Table: inputevents
+            Column: amount
+            Type: INTEGER
+            Description: Amount of drug",
+outputevents,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: outputevents
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+outputevents,subject_id,INTEGER,Unique identifier for each patient,"Table: outputevents
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+outputevents,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: outputevents
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+outputevents,stay_id,INTEGER,Unique identifier for each care unit stay,"Table: outputevents
+            Column: stay_id
+            Type: INTEGER
+            Description: Unique identifier for each care unit stay",
+outputevents,charttime,TIME,Time of output event,"Table: outputevents
+            Column: charttime
+            Type: TIME
+            Description: Time of output event",
+outputevents,itemid,INTEGER,Unique identifier for each measurement,"Table: outputevents
+            Column: itemid
+            Type: INTEGER
+            Description: Unique identifier for each measurement",
+outputevents,value,INTEGER,Amount of output,"Table: outputevents
+            Column: value
+            Type: INTEGER
+            Description: Amount of output",
+microbiologyevents,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: microbiologyevents
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+microbiologyevents,subject_id,INTEGER,Unique identifier for each patient,"Table: microbiologyevents
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+microbiologyevents,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: microbiologyevents
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+microbiologyevents,charttime,TIME,Time at which measurement was taken,"Table: microbiologyevents
+            Column: charttime
+            Type: TIME
+            Description: Time at which measurement was taken",
+microbiologyevents,spec_type_desc,TEXT,Description of specimen type,"Table: microbiologyevents
+            Column: spec_type_desc
+            Type: TEXT
+            Description: Description of specimen type",
+microbiologyevents,test_name,TEXT,Name of test performed,"Table: microbiologyevents
+            Column: test_name
+            Type: TEXT
+            Description: Name of test performed",
+microbiologyevents,org_name,TEXT,Name of organism which grew when test was performed,"Table: microbiologyevents
+            Column: org_name
+            Type: TEXT
+            Description: Name of organism which grew when test was performed",
+icustays,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: icustays
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+icustays,subject_id,INTEGER,Unique identifier for each patient,"Table: icustays
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+icustays,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: icustays
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+icustays,stay_id,INTEGER,Unique identifier for each care unit stay,"Table: icustays
+            Column: stay_id
+            Type: INTEGER
+            Description: Unique identifier for each care unit stay",
+icustays,first_careunit,TEXT,First care unit for patient,"Table: icustays
+            Column: first_careunit
+            Type: TEXT
+            Description: First care unit for patient",
+icustays,last_careunit,TEXT,Last care unit for patient,"Table: icustays
+            Column: last_careunit
+            Type: TEXT
+            Description: Last care unit for patient",
+icustays,intime,TIME,Time patient transferred to ICU,"Table: icustays
+            Column: intime
+            Type: TIME
+            Description: Time patient transferred to ICU",
+icustays,outtime,TIME,Time patient transferred out of ICU,"Table: icustays
+            Column: outtime
+            Type: TIME
+            Description: Time patient transferred out of ICU",
+transfers,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: transfers
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+transfers,subject_id,INTEGER,Unique identifier for each patient,"Table: transfers
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+transfers,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: transfers
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+transfers,transfer_id,INTEGER,Unique identifier for patient location,"Table: transfers
+            Column: transfer_id
+            Type: INTEGER
+            Description: Unique identifier for patient location",
+transfers,eventtype,TEXT,Type of transfer,"Table: transfers
+            Column: eventtype
+            Type: TEXT
+            Description: Type of transfer",
+transfers,careunit,TEXT,Type of unit,"Table: transfers
+            Column: careunit
+            Type: TEXT
+            Description: Type of unit",
+transfers,intime,TIME,Time patient transferred into care unit,"Table: transfers
+            Column: intime
+            Type: TIME
+            Description: Time patient transferred into care unit",
+transfers,outtime,TIME,Time patient transferred out of care unit,"Table: transfers
+            Column: outtime
+            Type: TIME
+            Description: Time patient transferred out of care unit",
+admissions,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: admissions
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+admissions,subject_id,INTEGER,Unique identifier for each patient,"Table: admissions
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+admissions,hadm_id,INTEGER,Unique identifier for each hospital admission,"Table: admissions
+            Column: hadm_id
+            Type: INTEGER
+            Description: Unique identifier for each hospital admission",
+admissions,admittime,TIME,Time of admission,"Table: admissions
+            Column: admittime
+            Type: TIME
+            Description: Time of admission",
+admissions,dischtime,TIME,Time of discharge,"Table: admissions
+            Column: dischtime
+            Type: TIME
+            Description: Time of discharge",
+admissions,admission_type,TEXT,Type of admission,"Table: admissions
+            Column: admission_type
+            Type: TEXT
+            Description: Type of admission",
+admissions,admission_location,TEXT,Location of patient before admission,"Table: admissions
+            Column: admission_location
+            Type: TEXT
+            Description: Location of patient before admission",
+admissions,discharge_location,TEXT,Location of patient after discharge,"Table: admissions
+            Column: discharge_location
+            Type: TEXT
+            Description: Location of patient after discharge",
+admissions,insurance,TEXT,Name of insurance,"Table: admissions
+            Column: insurance
+            Type: TEXT
+            Description: Name of insurance",
+admissions,language,TEXT,Language of patient,"Table: admissions
+            Column: language
+            Type: TEXT
+            Description: Language of patient",
+admissions,marital_status,TEXT,Marital status of patient,"Table: admissions
+            Column: marital_status
+            Type: TEXT
+            Description: Marital status of patient",
+admissions,age,INTEGER,Age of patient,"Table: admissions
+            Column: age
+            Type: INTEGER
+            Description: Age of patient",
+patients,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: patients
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+patients,subject_id,INTEGER,Unique identifier for each patient,"Table: patients
+            Column: subject_id
+            Type: INTEGER
+            Description: Unique identifier for each patient",
+patients,gender,TEXT,Gender of patient,"Table: patients
+            Column: gender
+            Type: TEXT
+            Description: Gender of patient",
+patients,dob,TIME,Date of birth of patient,"Table: patients
+            Column: dob
+            Type: TIME
+            Description: Date of birth of patient",
+patients,dod,TIME,Date of death of patient,"Table: patients
+            Column: dod
+            Type: TIME
+            Description: Date of death of patient",
+d_icd_diagnoses,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: d_icd_diagnoses
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+d_icd_diagnoses,icd_code,TEXT,ICD code for diagnosis,"Table: d_icd_diagnoses
+            Column: icd_code
+            Type: TEXT
+            Description: ICD code for diagnosis",
+d_icd_diagnoses,long_title,TEXT,Description of diagnosis,"Table: d_icd_diagnoses
+            Column: long_title
+            Type: TEXT
+            Description: Description of diagnosis",
+d_icd_procedures,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: d_icd_procedures
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+d_icd_procedures,icd_code,TEXT,ICD code for procedure,"Table: d_icd_procedures
+            Column: icd_code
+            Type: TEXT
+            Description: ICD code for procedure",
+d_icd_procedures,long_title,TEXT,Description of procedure,"Table: d_icd_procedures
+            Column: long_title
+            Type: TEXT
+            Description: Description of procedure",
+d_labitems,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: d_labitems
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+d_labitems,itemid,INTEGER,Unique identifier for each lab test,"Table: d_labitems
+            Column: itemid
+            Type: INTEGER
+            Description: Unique identifier for each lab test",
+d_labitems,label,TEXT,Name of lab test,"Table: d_labitems
+            Column: label
+            Type: TEXT
+            Description: Name of lab test",
+d_items,row_id,INTEGER PRIMARY KEY,Unique identifier for each row,"Table: d_items
+            Column: row_id
+            Type: INTEGER PRIMARY KEY
+            Description: Unique identifier for each row",
+d_items,itemid,INTEGER,Unique identifier for each item,"Table: d_items
+            Column: itemid
+            Type: INTEGER
+            Description: Unique identifier for each item",
+d_items,label,TEXT,Concept represented by item,"Table: d_items
+            Column: label
+            Type: TEXT
+            Description: Concept represented by item",
+d_items,abbreviation,TEXT,Abbreviation of label,"Table: d_items
+            Column: abbreviation
+            Type: TEXT
+            Description: Abbreviation of label",
+d_items,linksto,TEXT,table name that item links to,"Table: d_items
+            Column: linksto
+            Type: TEXT
+            Description: table name that item links to",
+,,,,Relationship: diagnoses_icd.event_id can be joined with cost.row_id,diagnoses_icd.event_id can be joined with cost.row_id
+,,,,Relationship: procedures_icd.event_id can be joined with cost.row_id,procedures_icd.event_id can be joined with cost.row_id
+,,,,Relationship: labevents.event_id can be joined with cost.row_id,labevents.event_id can be joined with cost.row_id
+,,,,Relationship: prescriptions.event_id can be joined with cost.row_id,prescriptions.event_id can be joined with cost.row_id
+,,,,Relationship: icustays.stay_id can be joined with chartevents.stay_id,icustays.stay_id can be joined with chartevents.stay_id
+,,,,Relationship: icustays.stay_id can be joined with inputevents.stay_id,icustays.stay_id can be joined with inputevents.stay_id
+,,,,Relationship: icustays.stay_id can be joined with outputevents.stay_id,icustays.stay_id can be joined with outputevents.stay_id
+,,,,Relationship: admissions.hadm_id can be joined with diagnoses_icd.hadm_id,admissions.hadm_id can be joined with diagnoses_icd.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with procedures_icd.hadm_id,admissions.hadm_id can be joined with procedures_icd.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with labevents.hadm_id,admissions.hadm_id can be joined with labevents.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with prescriptions.hadm_id,admissions.hadm_id can be joined with prescriptions.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with cost.hadm_id,admissions.hadm_id can be joined with cost.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with chartevents.hadm_id,admissions.hadm_id can be joined with chartevents.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with inputevents.hadm_id,admissions.hadm_id can be joined with inputevents.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with outputevents.hadm_id,admissions.hadm_id can be joined with outputevents.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with microbiologyevents.hadm_id,admissions.hadm_id can be joined with microbiologyevents.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with icustays.hadm_id,admissions.hadm_id can be joined with icustays.hadm_id
+,,,,Relationship: admissions.hadm_id can be joined with transfers.hadm_id,admissions.hadm_id can be joined with transfers.hadm_id
+,,,,Relationship: patients.subject_id can be joined with admissions.subject_id,patients.subject_id can be joined with admissions.subject_id
+,,,,Relationship: d_icd_diagnoses.icd_code can be joined with diagnoses_icd.icd_code,d_icd_diagnoses.icd_code can be joined with diagnoses_icd.icd_code
+,,,,Relationship: d_icd_procedures.icd_code can be joined with procedures_icd.icd_code,d_icd_procedures.icd_code can be joined with procedures_icd.icd_code
+,,,,Relationship: d_labitems.itemid can be joined with labevents.itemid,d_labitems.itemid can be joined with labevents.itemid
+,,,,Relationship: d_items.itemid can be joined with chartevents.itemid,d_items.itemid can be joined with chartevents.itemid
+,,,,Relationship: d_items.itemid can be joined with inputevents.itemid,d_items.itemid can be joined with inputevents.itemid
+,,,,Relationship: d_items.itemid can be joined with outputevents.itemid,d_items.itemid can be joined with outputevents.itemid
