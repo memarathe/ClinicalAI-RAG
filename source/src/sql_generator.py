@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 import re
 from dotenv import load_dotenv
-
+from abstain import is_medical_query
 # Load environment variables
 load_dotenv()
 
@@ -29,84 +29,79 @@ def format_context(search_results):
         "examples_context": examples_context.strip()
     }
 
+
 def clean_sql_query(sql):
-    """Remove markdown and formatting from SQL response"""
-    import re
-    # Remove opening code fence and optional 'sql' language tag
+    """Cleans SQL code block and ensures it starts with SELECT"""
+    # Remove code fences
     sql = re.sub(r"^```sql\s*", "", sql, flags=re.IGNORECASE)
-    # Remove opening code fence without language tag
     sql = re.sub(r"^```\s*", "", sql)
-    # Remove closing code fence at the end
     sql = re.sub(r"\s*```\s*$", "", sql)
-    # Remove any leading/trailing backticks or whitespace
+
+    # Strip backticks and whitespace
     sql = sql.strip("` \n")
-    # Remove any leading 'sql ' or 'SQL '
-    sql = re.sub(r"^\s*sql\s+", "", sql, flags=re.IGNORECASE)
-    # Remove inline SQL comments
+
+    # Remove leading non-SQL junk before SELECT
+    match = re.search(r"(SELECT\s+.*)", sql, flags=re.IGNORECASE | re.DOTALL)
+    if not match:
+        raise ValueError("No SELECT statement found in input.")
+    sql = match.group(1)
+
+    # Remove inline comments
     sql = re.sub(r"--.*", "", sql)
-    # Collapse multiple spaces and remove trailing semicolons
+
+    # Normalize whitespace and remove trailing semicolon
     sql = re.sub(r"\s+", " ", sql).strip().rstrip(';')
+
     return sql
 
-def is_medical_query(user_query):
-    """Determine if a query is related to medical database content"""
-    # List of medical domain terms from our schema
-    medical_terms = [
-    'patient', 'hospital', 'admission', 'diagnosis', 'procedure', 
-    'lab', 'test', 'medication', 'prescription', 'drug', 'dose',
-    'icu', 'subject_id', 'hadm_id', 'stay_id', 'icd', 'chart', 
-    'microbiology', 'treatment', 'cost', 'insurance', 'gender',
-    'age', 'dob', 'dod', 'admittime', 'dischtime', 'care', 'event',
-    'surgery', 'operation', 'repair', 'drainage', 'catheterization', 
-    'bypass', 'valvuloplasty', 'hepat', 'coronary', 'cardiac',
-    'angiography', 'arteriography', 'pleural', 'pericardial', 
-    'vascular', 'esophagus', 'esophagectomy', 'colonoscopy',
-    'endoscopy', 'fluoroscopy', 'intracardiac', 'graft', 
-    'nutritional', 'gastrointestinal', 'mammary', 'hepatectomy',
-    'device', 'prosthesis', 'fracture', 'fixation', 'balloon',
-    'ventricle', 'atrial', 'septal', 'pancreatic', 'artery', 
-    'vein', 'open heart', 'internal fixation', 'procedure_name',
-    'chronic', 'acute', 'severe', 'remission', 'complication',
-    'diagnostic', 'treatment_plan', 'risk_factor', 'comorbidity', 
-    'emergency', 'therapy', 'recovery', 'medical_history', 
-    'symptom', 'syndrome', 'hospitalization', 'adverse_event', 
-    'discharge', 'mortality', 'outcome', 'follow_up', 'immunization', 
-    'biopsy', 'radiology', 'ultrasound', 'ct_scan', 'mri', 'x_ray', 
-    'blood_pressure', 'heart_rate', 'oxygen_level', 'respiration_rate', 
-    'temperature', 'weight', 'height', 'bmi', 'glucose', 'cholesterol', 
-    'medication_type', 'dosage', 'administered', 'allergy', 'contraindication',
-    'side_effect', 'pharmacy', 'drug_interaction', 'prescribing', 
-    'surgical_team', 'anesthesia', 'incision', 'post_op', 'recovery_time',
-    'complication_rate', 'infection_rate', 'blood_loss', 'hospital_readmission',
-    'clinical_trial', 'preoperative', 'postoperative', 'medical_device', 
-    'implant', 'procedure_code', 'diagnostic_code', 'treatment_code', 
-    'hospital_cost', 'billing', 'insurance_coverage', 'reimbursement'
-]
- 
-    # Check if query contains medical terms
-    query_lower = user_query.lower()
-    for term in medical_terms:
-        if term in query_lower:
-            return True
-            
-    # Check for question patterns related to medical data
-    medical_patterns = [
-        r'patient.*\d+',
-        r'hospital.*admission',
-        r'medication',
-        r'diagnosis',
-        r'treatment',
-        r'prescription',
-        r'lab.*result',
-        r'icu',
-        r'cost.*treatment'
-    ]
+# def is_medical_query(user_query):
+#     """Determine if a query is related to medical database content"""
+#     import re
     
-    for pattern in medical_patterns:
-        if re.search(pattern, query_lower):
-            return True
-            
-    return False
+#     # Expanded list with normalized terms (spaces instead of underscores)
+#     medical_terms = [
+#         'patient', 'hospital', 'admission', 'diagnosis', 'procedure',
+#         'lab', 'test', 'medication', 'prescription', 'drug', 'dose',
+#         'icu', 'subject id', 'hadm id', 'stay id', 'icd code', 'chart',
+#         'microbiology', 'treatment', 'cost', 'insurance', 'gender',
+#         'age', 'date of birth', 'date of death', 'admission time',
+#         'discharge time', 'care', 'medical event', 'surgery', 
+#         'operation', 'repair', 'drainage', 'catheter', 'bypass',
+#         'valve repair', 'hepatic', 'heart', 'cardiac', 'imaging',
+#         'x-ray', 'ct scan', 'mri', 'blood pressure', 'heart rate',
+#         'oxygen level', 'respiratory rate', 'temperature', 'weight',
+#         'height', 'bmi', 'glucose', 'cholesterol', 'allergy',
+#         'side effect', 'pharmacy', 'diagnostic', 'therapy', 'recovery',
+#         'medical history', 'symptom', 'diagnosis code', 'procedure code',
+#         'insurance', 'billing', 'clinical trial'
+#     ]
+
+#     # Normalize query text
+#     query_lower = re.sub(r'[^\w\s]', '', user_query.lower())  # Remove punctuation
+#     query_words = set(query_lower.split())
+    
+#     # 1. Check for presence of core medical terms
+#     core_terms = {'patient', 'hospital', 'medical', 'diagnosis', 'treatment'}
+#     if core_terms & query_words:
+#         return True
+
+#     # 2. Check for presence of any medical terms
+#     for term in medical_terms:
+#         if term in query_lower:  # Substring match for multi-word terms
+#             return True
+
+#     # 3. Enhanced regex patterns
+#     patterns = [
+#         r'\b(patient|pt)\b.*\b\d{4,}\b',  # Patient IDs
+#         r'\b(age|dob|gender)\b.*\b(patient|subject)\b',
+#         r'\b(medication|prescription|drug)\b.*\b(history|dose)\b',
+#         r'\b(diagnos|treatment)\b.*\b(heart|lung|kidney)\b',
+#         r'\b(admission|discharge)\b.*\b(date|time)\b',
+#         r'\b(lab|test)\b.*\b(result|value)\b',
+#         r'\b(surgery|operation)\b.*\b(complication)\b'
+#     ]
+    
+#     return any(re.search(pattern, query_lower) for pattern in patterns)
 
 def generate_sql_query(user_query, formatted_context):
     """Generate SQL query using Gemini API with abstention capability"""
@@ -121,8 +116,8 @@ def generate_sql_query(user_query, formatted_context):
 
     # Create prompt for the language model
     prompt = f"""
-    You are an expert in SQL query generation. Using the database schema information and similar 
-    examples below, convert the user question into a valid SQL query for a medical database.
+    You are an expert in SQL query generation and a medical practitioner. Using the database schema information and similar 
+    examples below,your task is to convert the user question into a valid SQL query for a medical database.
     
     Database schema:
     {formatted_context['schema_context']}
@@ -132,13 +127,9 @@ def generate_sql_query(user_query, formatted_context):
     
     User question: {user_query}
     
-    IMPORTANT: If you determine the question is not related to medical data, patients, 
-    treatments, medications, or hospital stays, respond ONLY with:
-    "ABSTAIN: This question is not answerable with this medical database."
-    
-    Otherwise, generate only the SQL query without any explanation.
-    
-    Please ensure your SQL syntax follows SQLite format.
+    IMPORTANT: 
+    Generate only the SQL query without any explanation.
+    Strictly follow the SQLite syntax.
     """
     
     try:
@@ -146,7 +137,7 @@ def generate_sql_query(user_query, formatted_context):
         genai.configure(api_key=api_key)
         
         # Initialize the Gemini Pro model
-        model = genai.GenerativeModel('gemini-1.5-pro')
+        model = genai.GenerativeModel('gemini-2.0-flash') #Gemini 1.5 Flash
         
         # Set generation parameters for better SQL output
         generation_config = {
