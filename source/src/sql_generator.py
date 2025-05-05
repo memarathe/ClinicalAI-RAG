@@ -54,55 +54,6 @@ def clean_sql_query(sql):
 
     return sql
 
-# def is_medical_query(user_query):
-#     """Determine if a query is related to medical database content"""
-#     import re
-    
-#     # Expanded list with normalized terms (spaces instead of underscores)
-#     medical_terms = [
-#         'patient', 'hospital', 'admission', 'diagnosis', 'procedure',
-#         'lab', 'test', 'medication', 'prescription', 'drug', 'dose',
-#         'icu', 'subject id', 'hadm id', 'stay id', 'icd code', 'chart',
-#         'microbiology', 'treatment', 'cost', 'insurance', 'gender',
-#         'age', 'date of birth', 'date of death', 'admission time',
-#         'discharge time', 'care', 'medical event', 'surgery', 
-#         'operation', 'repair', 'drainage', 'catheter', 'bypass',
-#         'valve repair', 'hepatic', 'heart', 'cardiac', 'imaging',
-#         'x-ray', 'ct scan', 'mri', 'blood pressure', 'heart rate',
-#         'oxygen level', 'respiratory rate', 'temperature', 'weight',
-#         'height', 'bmi', 'glucose', 'cholesterol', 'allergy',
-#         'side effect', 'pharmacy', 'diagnostic', 'therapy', 'recovery',
-#         'medical history', 'symptom', 'diagnosis code', 'procedure code',
-#         'insurance', 'billing', 'clinical trial'
-#     ]
-
-#     # Normalize query text
-#     query_lower = re.sub(r'[^\w\s]', '', user_query.lower())  # Remove punctuation
-#     query_words = set(query_lower.split())
-    
-#     # 1. Check for presence of core medical terms
-#     core_terms = {'patient', 'hospital', 'medical', 'diagnosis', 'treatment'}
-#     if core_terms & query_words:
-#         return True
-
-#     # 2. Check for presence of any medical terms
-#     for term in medical_terms:
-#         if term in query_lower:  # Substring match for multi-word terms
-#             return True
-
-#     # 3. Enhanced regex patterns
-#     patterns = [
-#         r'\b(patient|pt)\b.*\b\d{4,}\b',  # Patient IDs
-#         r'\b(age|dob|gender)\b.*\b(patient|subject)\b',
-#         r'\b(medication|prescription|drug)\b.*\b(history|dose)\b',
-#         r'\b(diagnos|treatment)\b.*\b(heart|lung|kidney)\b',
-#         r'\b(admission|discharge)\b.*\b(date|time)\b',
-#         r'\b(lab|test)\b.*\b(result|value)\b',
-#         r'\b(surgery|operation)\b.*\b(complication)\b'
-#     ]
-    
-#     return any(re.search(pattern, query_lower) for pattern in patterns)
-
 def generate_sql_query(user_query, formatted_context):
     """Generate SQL query using Gemini API with abstention capability"""
     # First check if query is related to medical domain
@@ -115,10 +66,11 @@ def generate_sql_query(user_query, formatted_context):
         return "-- Gemini API key not found in environment variables. Please set GEMINI_API_KEY."
 
     # Create prompt for the language model
-    prompt = f"""
-    You are an expert in SQL query generation and a medical practitioner. Using the database schema information and similar 
-    examples below,your task is to convert the user question into a valid SQL query for a medical database.
     
+    prompt = f"""
+    You are an expert in SQL query generation. 
+    Your task is to convert the user question into a valid SQL query for a medical database.
+    Use the following information to generate the SQL query:
     Database schema:
     {formatted_context['schema_context']}
     
@@ -128,7 +80,7 @@ def generate_sql_query(user_query, formatted_context):
     User question: {user_query}
     
     IMPORTANT: 
-    Generate only the SQL query without any explanation.
+    Generate only the SQL query without any explanation. 
     Strictly follow the SQLite syntax.
     """
     
@@ -137,7 +89,8 @@ def generate_sql_query(user_query, formatted_context):
         genai.configure(api_key=api_key)
         
         # Initialize the Gemini Pro model
-        model = genai.GenerativeModel('gemini-2.0-flash') #Gemini 1.5 Flash
+        model = genai.GenerativeModel('gemini-1.5-pro') #Gemini 1.5 Flash
+        
         
         # Set generation parameters for better SQL output
         generation_config = {

@@ -273,11 +273,6 @@ def is_medical_query(user_query):
     # If a drug formulation pattern is matched, boost the score
     if any(re.search(pattern, normalized_query) for pattern in drug_formulations):
         score += 3
-    
-    # Debugging info (comment out in production)
-    # print(f"Query: {user_query}")
-    # print(f"Score: {score}")
-    # print(f"Threshold: {threshold}")
-    
+       
     # Return final decision based on score
     return score >= threshold

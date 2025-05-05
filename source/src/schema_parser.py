@@ -68,7 +68,6 @@ def parse_schema_sql(sql_path):
         }
         records.append(record)
     
-    # Debug: Print all extracted table names
     if records:
         print(f"DEBUG: First table name found: {records[0].get('table_name', 'No tables found')}")
     

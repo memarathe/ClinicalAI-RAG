@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer
 def process_train_csv(csv_path):
     """Process training data from CSV file with question-query pairs"""
     df = pd.read_csv(csv_path)
-    
+    df = df[:4765][:]  # Limit to 4765 rows for testing;
     records = []
     for _, row in df.iterrows():
         question = str(row['question'])
